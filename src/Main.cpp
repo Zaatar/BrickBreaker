@@ -1,5 +1,6 @@
 #include "./engine/Window.h"
 #include "./engine/Game.h"
+#include "./engine/Timer.h"
 
 using std::cout;
 using std::endl;
@@ -35,11 +36,15 @@ int main(int argc = 0, char **argv = nullptr)
     Game game;
     game.init(SCREEN_WIDTH, SCREEN_HEIGHT);
     game.load();
+    Timer timer;
+    float dt;
 
     //Game Loop
     while (game.getIsRunning())
     {
+        dt = static_cast<float>(timer.computeDeltaTime()) / 1000.0f;
         game.handleInputs();
+        game.update(dt);
         //Draw
         window.clearScreen();
         game.render();

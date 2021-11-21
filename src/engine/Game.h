@@ -2,6 +2,7 @@
 #define GAME_H
 
 #include <SDL.h>
+#include "Ball.h"
 
 class Game
 {
@@ -22,5 +23,7 @@ public:
 private:
     bool isRunning;
     int windowWidth, windowHeight;
+
+    Ball ball;
 };
 #endif

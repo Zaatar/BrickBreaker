@@ -4,6 +4,8 @@
 #include <GL/glew.h>
 #include <iostream>
 
+#include "Shader.h"
+
 class Square
 {
 public:
@@ -13,9 +15,11 @@ public:
     void load();
     void render();
 
-private:
+protected:
     GLuint vao;
     GLuint vbo;
+    Shader shader;
+
     float lastPositionX = 0.5f;
     float lastPositionY = 0.5f;
     float speedX = 1.0f;

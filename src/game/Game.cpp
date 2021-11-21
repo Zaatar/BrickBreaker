@@ -1,4 +1,4 @@
-#include "./Game.h"
+#include "../engine/Game.h"
 
 Game::Game() : isRunning(false), windowWidth(0), windowHeight(0) {}
 
@@ -7,9 +7,13 @@ void Game::init(int windowWidthP, int windowHeightP)
     windowWidth = windowWidthP;
     windowHeight = windowHeightP;
     isRunning = true;
+    ball.init();
 }
 
-void Game::load() {}
+void Game::load()
+{
+    ball.load();
+}
 
 void Game::handleInputs()
 {
@@ -33,8 +37,14 @@ void Game::handleInputs()
     }
 }
 
-void Game::update(float dt) {}
+void Game::update(float dt)
+{
+    ball.movement(dt);
+}
 
-void Game::render() {}
+void Game::render()
+{
+    ball.render();
+}
 
 void Game::clean() {}
