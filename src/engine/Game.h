@@ -3,6 +3,7 @@
 
 #include <SDL.h>
 #include "Ball.h"
+#include "Paddle.h"
 
 class Game
 {
@@ -25,5 +26,9 @@ private:
     int windowWidth, windowHeight;
 
     Ball ball;
+    Paddle paddle;
+
+    bool paddleMoveLeft = false;
+    bool paddleMoveRight = false;
 };
 #endif

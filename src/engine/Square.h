@@ -12,6 +12,7 @@ public:
     Square() = default;
     ~Square() = default;
 
+    void init();
     void load();
     void render();
 

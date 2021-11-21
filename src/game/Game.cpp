@@ -8,11 +8,13 @@ void Game::init(int windowWidthP, int windowHeightP)
     windowHeight = windowHeightP;
     isRunning = true;
     ball.init();
+    paddle.init();
 }
 
 void Game::load()
 {
     ball.load();
+    paddle.load();
 }
 
 void Game::handleInputs()
@@ -30,6 +32,16 @@ void Game::handleInputs()
             {
                 isRunning = false;
             }
+            if (event.key.keysym.sym == SDLK_RIGHT || event.key.keysym.sym == SDLK_d)
+            {
+                paddleMoveRight = true;
+                paddleMoveLeft = false;
+            }
+            if (event.key.keysym.sym == SDLK_LEFT || event.key.keysym.sym == SDLK_a || event.key.keysym.sym == SDLK_q)
+            {
+                paddleMoveRight = false;
+                paddleMoveLeft = true;
+            }
             break;
         default:
             break;
@@ -40,11 +52,13 @@ void Game::handleInputs()
 void Game::update(float dt)
 {
     ball.movement(dt);
+    paddle.movement(dt, paddleMoveLeft, paddleMoveRight);
 }
 
 void Game::render()
 {
     ball.render();
+    paddle.render();
 }
 
 void Game::clean() {}
