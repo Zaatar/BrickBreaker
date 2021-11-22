@@ -16,6 +16,9 @@ public:
     void load();
     void render();
 
+    inline float getLastPositionX() { return lastPositionX; }
+    inline float getLastPositionY() { return lastPositionY; }
+
 protected:
     GLuint vao;
     GLuint vbo;

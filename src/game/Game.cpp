@@ -43,6 +43,15 @@ void Game::handleInputs()
                 paddleMoveLeft = true;
             }
             break;
+        case SDL_KEYUP:
+            if (event.key.keysym.sym == SDLK_RIGHT || event.key.keysym.sym == SDLK_d)
+            {
+                paddleMoveRight = false;
+            }
+            if (event.key.keysym.sym == SDLK_LEFT || event.key.keysym.sym == SDLK_a || event.key.keysym.sym == SDLK_q)
+            {
+                paddleMoveLeft = false;
+            }
         default:
             break;
         }
@@ -51,7 +60,7 @@ void Game::handleInputs()
 
 void Game::update(float dt)
 {
-    ball.movement(dt);
+    ball.movement(dt, paddle.getLastPositionX());
     paddle.movement(dt, paddleMoveLeft, paddleMoveRight);
 }
 

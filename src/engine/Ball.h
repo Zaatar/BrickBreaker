@@ -11,7 +11,7 @@ public:
     ~Ball() = default;
 
     void init();
-    void movement(float dt);
+    void movement(float dt, float paddleXPosition);
 
 private:
     float ballScaleMatrix[16] = {

@@ -1,4 +1,8 @@
+#include <iostream>
 #include "Ball.h"
+
+using std::cout;
+using std::endl;
 
 void Ball::init()
 {
@@ -10,8 +14,29 @@ void Ball::init()
     lastPositionY = -0.9f;
 }
 
-void Ball::movement(float dt)
+void Ball::movement(float dt, float paddleXPosition)
 {
+    float threshold = 1.0 - 0.05;
+    if (lastPositionY < -threshold)
+    {
+        //Ball hits to the left of the paddle
+        if (lastPositionX < paddleXPosition - 0.2)
+        {
+            cout << "Ball hits to the left of the paddle" << endl;
+            lastPositionX = 0.0f;
+            lastPositionY = -0.9f;
+            speedX = 1.0f;
+            speedY = 1.0f;
+        }
+        if (lastPositionX > paddleXPosition + 0.2)
+        {
+            cout << "Ball hits to the right of the paddle" << endl;
+            lastPositionX = 0.0f;
+            lastPositionY = -0.9f;
+            speedX = 1.0f;
+            speedY = 1.0f;
+        }
+    }
     if (abs(lastPositionX) > 1)
     {
         speedX = -speedX;
