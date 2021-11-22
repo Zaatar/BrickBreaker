@@ -30,5 +30,6 @@ private:
 
     bool paddleMoveLeft = false;
     bool paddleMoveRight = false;
+    bool collision = false;
 };
 #endif

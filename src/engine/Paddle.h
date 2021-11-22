@@ -8,6 +8,10 @@ class Paddle : public Square
 public:
     void init();
     void movement(float dt, bool moveLeft, bool moveRight);
+    const float XDISTANCE = 0.21f;
+    const float YDISTANCE = 0.06f;
+    const float XSTARTPOS = 0.0f;
+    const float YSTARTPOS = -0.85f;
 
 private:
     float paddleScaleMatrix[16] = {

@@ -16,6 +16,9 @@ public:
     void load();
     void render();
 
+    void updateCoordinates(float xDistance, float yDistance);
+    bool checkCollision(Square &one, Square &two);
+
     inline float getLastPositionX() { return lastPositionX; }
     inline float getLastPositionY() { return lastPositionY; }
 
@@ -24,6 +27,10 @@ protected:
     GLuint vbo;
     Shader shader;
 
+    float xPos;   //X at bottom left of drawn object
+    float width;  //width
+    float yPos;   //Y at bottom left of drawn object
+    float height; //height
     float lastPositionX = 0.5f;
     float lastPositionY = 0.5f;
     float speedX = 1.0f;

@@ -1,4 +1,8 @@
+#include <iostream>
 #include "Paddle.h"
+
+using std::cout;
+using std::endl;
 
 void Paddle::init()
 {
@@ -6,8 +10,10 @@ void Paddle::init()
     {
         scaleMatrix[i] = paddleScaleMatrix[i];
     }
-    translationMatrix[13] = -0.95;
-    lastPositionX = 0.0f;
+    translationMatrix[13] = YSTARTPOS;
+    lastPositionX = XSTARTPOS;
+    lastPositionY = translationMatrix[13];
+    updateCoordinates(XDISTANCE, YDISTANCE);
 }
 
 void Paddle::movement(float dt, bool moveLeft, bool moveRight)
@@ -21,6 +27,7 @@ void Paddle::movement(float dt, bool moveLeft, bool moveRight)
         }
         translationMatrix[12] = -speedX * dt + lastPositionX;
         lastPositionX = translationMatrix[12];
+        updateCoordinates(XDISTANCE, YDISTANCE);
         speedX = 1;
     }
     if (moveRight == true)
@@ -31,6 +38,7 @@ void Paddle::movement(float dt, bool moveLeft, bool moveRight)
         }
         translationMatrix[12] = speedX * dt + lastPositionX;
         lastPositionX = translationMatrix[12];
+        updateCoordinates(XDISTANCE, YDISTANCE);
         speedX = 1;
     }
 }

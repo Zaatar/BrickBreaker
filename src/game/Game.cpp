@@ -1,4 +1,8 @@
+#include <iostream>
 #include "../engine/Game.h"
+
+using std::cout;
+using std::endl;
 
 Game::Game() : isRunning(false), windowWidth(0), windowHeight(0) {}
 
@@ -62,6 +66,11 @@ void Game::update(float dt)
 {
     ball.movement(dt, paddle.getLastPositionX());
     paddle.movement(dt, paddleMoveLeft, paddleMoveRight);
+    collision = paddle.checkCollision(paddle, ball);
+    if (collision)
+    {
+        cout << "Collision is true" << endl;
+    }
 }
 
 void Game::render()

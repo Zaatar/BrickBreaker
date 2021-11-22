@@ -13,6 +13,11 @@ public:
     void init();
     void movement(float dt, float paddleXPosition);
 
+    const float XDISTANCE = 0.06;
+    const float YDISTANCE = 0.06;
+    const float YSTARTPOS = -0.7f;
+    const float XSTARTPOS = 0.0f;
+
 private:
     float ballScaleMatrix[16] = {
         0.1f, 0.0f, 0.0f, 0.0f,

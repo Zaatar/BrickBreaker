@@ -11,7 +11,10 @@ void Ball::init()
         scaleMatrix[i] = ballScaleMatrix[i];
     }
     lastPositionX = 0.0f;
-    lastPositionY = -0.9f;
+    lastPositionY = -0.7f;
+    translationMatrix[12] = lastPositionX;
+    translationMatrix[13] = lastPositionY;
+    updateCoordinates(XDISTANCE, YDISTANCE);
 }
 
 void Ball::movement(float dt, float paddleXPosition)
@@ -23,16 +26,16 @@ void Ball::movement(float dt, float paddleXPosition)
         if (lastPositionX < paddleXPosition - 0.2)
         {
             cout << "Ball hits to the left of the paddle" << endl;
-            lastPositionX = 0.0f;
-            lastPositionY = -0.9f;
+            lastPositionX = XSTARTPOS;
+            lastPositionY = YSTARTPOS;
             speedX = 1.0f;
             speedY = 1.0f;
         }
         if (lastPositionX > paddleXPosition + 0.2)
         {
             cout << "Ball hits to the right of the paddle" << endl;
-            lastPositionX = 0.0f;
-            lastPositionY = -0.9f;
+            lastPositionX = XSTARTPOS;
+            lastPositionY = YSTARTPOS;
             speedX = 1.0f;
             speedY = 1.0f;
         }
@@ -49,4 +52,5 @@ void Ball::movement(float dt, float paddleXPosition)
     lastPositionX = translationMatrix[12];
     translationMatrix[13] = speedY * dt + lastPositionY;
     lastPositionY = translationMatrix[13];
+    updateCoordinates(XDISTANCE, YDISTANCE);
 }
