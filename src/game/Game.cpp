@@ -13,12 +13,40 @@ void Game::init(int windowWidthP, int windowHeightP)
     isRunning = true;
     ball.init();
     paddle.init();
+    int brickCounter = 0;
+    for (int i = 0; i < COLUMNS; ++i)
+    {
+        for (int j = 0; j < ROWS; ++j)
+        {
+            brickArray[brickCounter].init(xStartPos, yStartPos);
+            brickCounter++;
+            xStartPos = xStartPos + BRICK_GAP;
+            /*
+            Brick brick = Brick();
+            brick.init(xStartPos, yStartPos);
+            brickSet.insert(brick);
+            xStartPos = xStartPos + BRICK_GAP;
+            */
+        }
+        xStartPos = -0.9f;
+        yStartPos = yStartPos - BRICK_GAP;
+    }
 }
 
 void Game::load()
 {
     ball.load();
     paddle.load();
+    for (int i = 0; i < sizeof(brickArray); i++)
+    {
+        brickArray[i].load();
+    }
+    /*
+    for (Brick b : brickSet)
+    {
+        b.load();
+    }
+    */
 }
 
 void Game::handleInputs()
@@ -70,7 +98,7 @@ void Game::update(float dt)
     collision = ball.checkCollision(ball, paddle);
     if (collision)
     {
-        ball.paddleCollision(dt, paddle);
+        ball.paddleCollision(paddle);
     }
 }
 
@@ -78,6 +106,17 @@ void Game::render()
 {
     ball.render();
     paddle.render();
+    for (int i = 0; i < sizeof(brickArray); ++i)
+    {
+        brickArray[i].render();
+    }
+
+    /*
+    for (Brick b : brickSet)
+    {
+        b.render();
+    }
+    */
 }
 
 void Game::clean() {}
