@@ -19,7 +19,7 @@ void Ball::init()
 
 void Ball::movement(float dt, float paddleXPosition)
 {
-    float threshold = 1.0 - 0.05;
+    float threshold = 1.0 - 0.15;
     if (lastPositionY < -threshold)
     {
         //Ball hits to the left of the paddle
@@ -53,4 +53,42 @@ void Ball::movement(float dt, float paddleXPosition)
     translationMatrix[13] = speedY * dt + lastPositionY;
     lastPositionY = translationMatrix[13];
     updateCoordinates(XDISTANCE, YDISTANCE);
+}
+
+void Ball::paddleCollision(float dt, Square &paddle)
+{
+    float paddleXPos = paddle.getLastPositionX();
+    if (lastPositionX > paddleXPos - 0.07 && lastPositionX < paddleXPos + 0.07)
+    {
+        if (speedX == 1.25f)
+        {
+            speedX = 1.0f;
+        }
+        speedX = 0;
+    }
+    else if (lastPositionX > paddleXPos + 0.08 && lastPositionX < paddleXPos + 0.21)
+    {
+        if (speedX == 0.0f)
+        {
+            speedX = 1.0f;
+        }
+        speedX = speedX * 1.25f;
+    }
+    else if (lastPositionX < paddleXPos - 0.08 && lastPositionX > paddleXPos - 0.21)
+    {
+        if (speedX == 0.0f)
+        {
+            speedX = 1.0f;
+        }
+        speedX = -speedX * 1.25f;
+    }
+    speedY = -speedY;
+    if (speedX > 1.5)
+    {
+        speedX = 1.5;
+    }
+    if (speedX < -1.5)
+    {
+        speedX = -1.5;
+    }
 }

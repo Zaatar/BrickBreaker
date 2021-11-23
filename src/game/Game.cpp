@@ -66,10 +66,11 @@ void Game::update(float dt)
 {
     ball.movement(dt, paddle.getLastPositionX());
     paddle.movement(dt, paddleMoveLeft, paddleMoveRight);
-    collision = paddle.checkCollision(paddle, ball);
+    //To be improved upon, having to call the collision from paddle is not the best
+    collision = ball.checkCollision(ball, paddle);
     if (collision)
     {
-        cout << "Collision is true" << endl;
+        ball.paddleCollision(dt, paddle);
     }
 }
 

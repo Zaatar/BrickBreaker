@@ -12,6 +12,7 @@ public:
 
     void init();
     void movement(float dt, float paddleXPosition);
+    void paddleCollision(float dt, Square &paddle);
 
     const float XDISTANCE = 0.06;
     const float YDISTANCE = 0.06;
