@@ -2,6 +2,7 @@
 #define GAME_H
 
 #include <set>
+#include <vector>
 #include <SDL.h>
 
 #include "Ball.h"
@@ -9,6 +10,7 @@
 #include "Brick.h"
 
 using std::set;
+using std::vector;
 
 class Game
 {
@@ -38,6 +40,7 @@ private:
     bool collision = false;
 
     Brick brickArray[30];
+    vector<Brick> bricksVector;
     set<Brick> brickSet;
     float xStartPos = -0.9f;
     float yStartPos = 0.9f;

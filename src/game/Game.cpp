@@ -14,14 +14,21 @@ void Game::init(int windowWidthP, int windowHeightP)
     ball.init();
     paddle.init();
     int brickCounter = 0;
+    bricksVector.reserve(ROWS * COLUMNS);
     for (int i = 0; i < COLUMNS; ++i)
     {
         for (int j = 0; j < ROWS; ++j)
         {
+            Brick brick = Brick();
+            brick.init(xStartPos, yStartPos);
+            bricksVector.push_back(brick);
+            /* ARRAY Implementation
             brickArray[brickCounter].init(xStartPos, yStartPos);
             brickCounter++;
             xStartPos = xStartPos + BRICK_GAP;
             /*
+            /*
+            SET Implementation
             Brick brick = Brick();
             brick.init(xStartPos, yStartPos);
             brickSet.insert(brick);
@@ -37,11 +44,17 @@ void Game::load()
 {
     ball.load();
     paddle.load();
+    for (int i = 0; i < sizeof(bricksVector); ++i)
+    {
+        bricksVector[i].load();
+    }
+    /* ARRAY Implementation
     for (int i = 0; i < sizeof(brickArray); i++)
     {
         brickArray[i].load();
     }
-    /*
+    */
+    /* SET Implementation
     for (Brick b : brickSet)
     {
         b.load();
@@ -106,12 +119,18 @@ void Game::render()
 {
     ball.render();
     paddle.render();
+    for (int i = 0; i < sizeof(bricksVector); ++i)
+    {
+        bricksVector[i].render();
+    }
+
+    /* ARRAY Implementation
     for (int i = 0; i < sizeof(brickArray); ++i)
     {
         brickArray[i].render();
     }
-
-    /*
+    */
+    /* SET Implementation
     for (Brick b : brickSet)
     {
         b.render();
