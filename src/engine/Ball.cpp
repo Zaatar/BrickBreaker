@@ -55,7 +55,7 @@ void Ball::movement(float dt, float paddleXPosition)
     updateCoordinates(XDISTANCE, YDISTANCE);
 }
 
-void Ball::paddleCollision(float dt, Square &paddle)
+void Ball::paddleCollision(Square &paddle)
 {
     float paddleXPos = paddle.getLastPositionX();
     if (lastPositionX > paddleXPos - 0.07 && lastPositionX < paddleXPos + 0.07)
@@ -91,4 +91,10 @@ void Ball::paddleCollision(float dt, Square &paddle)
     {
         speedX = -1.5;
     }
+}
+
+void Ball::brickCollision(Square &brick)
+{
+    speedX = -speedX;
+    speedY = -speedY;
 }
