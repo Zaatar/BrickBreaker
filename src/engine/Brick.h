@@ -16,7 +16,7 @@ private:
         0.0f, 0.0f, 1.0f, 0.0f,
         0.0f, 0.0f, 0.0f, 1.0f};
 
-    const float XDISTANCE = 0.11;
-    const float YDISTANCE = 0.06;
+    //const float XDISTANCE = 0.11;
+    //const float YDISTANCE = 0.06;
 };
 #endif

@@ -14,7 +14,7 @@ void Game::init(int windowWidthP, int windowHeightP)
     ball.init();
     paddle.init();
     int brickCounter = 0;
-    bricksVector.reserve(ROWS * COLUMNS);
+    //bricksVector.reserve(ROWS * COLUMNS);
     for (int i = 0; i < COLUMNS; ++i)
     {
         for (int j = 0; j < ROWS; ++j)
@@ -22,21 +22,10 @@ void Game::init(int windowWidthP, int windowHeightP)
             Brick brick = Brick();
             brick.init(xStartPos, yStartPos);
             bricksVector.push_back(brick);
-            /* ARRAY Implementation
-            brickArray[brickCounter].init(xStartPos, yStartPos);
-            brickCounter++;
             xStartPos = xStartPos + BRICK_GAP;
-            /*
-            /*
-            SET Implementation
-            Brick brick = Brick();
-            brick.init(xStartPos, yStartPos);
-            brickSet.insert(brick);
-            xStartPos = xStartPos + BRICK_GAP;
-            */
         }
         xStartPos = -0.9f;
-        yStartPos = yStartPos - BRICK_GAP;
+        yStartPos = yStartPos - Y_BRICK_GAP;
     }
 }
 
@@ -44,22 +33,10 @@ void Game::load()
 {
     ball.load();
     paddle.load();
-    for (int i = 0; i < sizeof(bricksVector); ++i)
+    for (int i = 0; i < bricksVector.size(); ++i)
     {
         bricksVector[i].load();
     }
-    /* ARRAY Implementation
-    for (int i = 0; i < sizeof(brickArray); i++)
-    {
-        brickArray[i].load();
-    }
-    */
-    /* SET Implementation
-    for (Brick b : brickSet)
-    {
-        b.load();
-    }
-    */
 }
 
 void Game::handleInputs()
@@ -107,11 +84,23 @@ void Game::update(float dt)
 {
     ball.movement(dt, paddle.getLastPositionX());
     paddle.movement(dt, paddleMoveLeft, paddleMoveRight);
-    //To be improved upon, having to call the collision from paddle is not the best
-    collision = ball.checkCollision(ball, paddle);
-    if (collision)
+    //To be improved upon, having to call the paddleCollision from paddle is not the best
+    //Paddle Collision Code
+    paddleCollision = ball.checkCollision(ball, paddle);
+    if (paddleCollision)
     {
         ball.paddleCollision(paddle);
+    }
+    //Brick Collision Code
+    for (int i = 0; i < bricksVector.size(); i++)
+    {
+        brickCollision = ball.checkCollision(ball, bricksVector[i]);
+        if (brickCollision)
+        {
+            ball.brickCollision(bricksVector[i]);
+            bricksVector.erase(bricksVector.begin() + i);
+        }
+        brickCollision = false;
     }
 }
 
@@ -119,23 +108,10 @@ void Game::render()
 {
     ball.render();
     paddle.render();
-    for (int i = 0; i < sizeof(bricksVector); ++i)
+    for (int i = 0; i < bricksVector.size(); ++i)
     {
         bricksVector[i].render();
     }
-
-    /* ARRAY Implementation
-    for (int i = 0; i < sizeof(brickArray); ++i)
-    {
-        brickArray[i].render();
-    }
-    */
-    /* SET Implementation
-    for (Brick b : brickSet)
-    {
-        b.render();
-    }
-    */
 }
 
 void Game::clean() {}

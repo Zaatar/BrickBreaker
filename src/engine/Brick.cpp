@@ -8,5 +8,5 @@ void Brick::init(float xPos, float yPos)
     }
     translationMatrix[12] = xPos;
     translationMatrix[13] = yPos;
-    updateCoordinates(XDISTANCE, YDISTANCE);
+    updateCoordinates(0.11, 0.06);
 }

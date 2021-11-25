@@ -37,15 +37,15 @@ private:
 
     bool paddleMoveLeft = false;
     bool paddleMoveRight = false;
-    bool collision = false;
+    bool paddleCollision = false;
+    bool brickCollision = false;
 
-    Brick brickArray[30];
     vector<Brick> bricksVector;
-    set<Brick> brickSet;
     float xStartPos = -0.9f;
     float yStartPos = 0.9f;
-    const int COLUMNS = 5;
-    const int ROWS = 5;
-    const float BRICK_GAP = 0.2f;
+    const int COLUMNS = 6;
+    const int ROWS = 8;
+    const float Y_BRICK_GAP = 0.15f;
+    const float BRICK_GAP = 0.25f;
 };
 #endif

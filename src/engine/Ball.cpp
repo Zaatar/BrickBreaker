@@ -92,3 +92,9 @@ void Ball::paddleCollision(Square &paddle)
         speedX = -1.5;
     }
 }
+
+void Ball::brickCollision(Square &brick)
+{
+    speedX = -speedX;
+    speedY = -speedY;
+}
