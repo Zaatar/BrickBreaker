@@ -24,7 +24,8 @@ public:
 
 protected:
     GLuint vao;
-    GLuint vbo;
+    GLuint pointsVbo;
+    GLuint colorsVbo;
     Shader shader;
 
     float xPos;   //X at bottom left of drawn object
@@ -49,5 +50,7 @@ protected:
         0.0f, 1.0f, 0.0f, 0.0f,
         0.0f, 0.0f, 1.0f, 0.0f,
         0.0f, 0.0f, 0.0f, 1.0f};
+
+    float colors[3] = {};
 };
 #endif

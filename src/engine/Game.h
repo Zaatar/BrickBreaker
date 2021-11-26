@@ -25,6 +25,10 @@ public:
     void render();
     void clean();
     void updateScore();
+    void populateBricks();
+    void loadBricks();
+    void renderBricks();
+    void restartBricks();
 
     inline bool getIsRunning() { return isRunning; }
 
@@ -41,6 +45,8 @@ private:
     bool brickCollision = false;
 
     vector<Brick> bricksVector;
+    float origXStartPos = -0.9f;
+    float origYStartPos = 0.9f;
     float xStartPos = -0.9f;
     float yStartPos = 0.9f;
     const int COLUMNS = 6;

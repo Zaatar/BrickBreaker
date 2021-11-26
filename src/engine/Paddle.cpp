@@ -42,3 +42,15 @@ void Paddle::movement(float dt, bool moveLeft, bool moveRight)
         speedX = 1;
     }
 }
+
+void Paddle::updateScore()
+{
+    score += 5;
+    cout << "Score is now : " << score << endl;
+}
+
+void Paddle::updateLives()
+{
+    lives--;
+    cout << "You have " << lives << " lives left" << endl;
+}

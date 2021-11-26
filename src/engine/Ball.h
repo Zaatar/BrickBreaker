@@ -2,6 +2,7 @@
 #define BALL_H
 
 #include <math.h>
+#include "Paddle.h"
 #include "Square.h"
 
 class Ball : public Square
@@ -11,7 +12,7 @@ public:
     ~Ball() = default;
 
     void init();
-    void movement(float dt, float paddleXPosition);
+    void movement(float dt, Paddle &paddle);
     void paddleCollision(Square &paddle);
     void brickCollision(Square &brick);
 
