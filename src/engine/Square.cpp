@@ -2,9 +2,9 @@
 
 void Square::updateCoordinates(float xDistance, float yDistance)
 {
-    xPos = translationMatrix[12] - xDistance;
+    xPos = getX() - xDistance;
     width = xDistance * 2;
-    yPos = translationMatrix[13] - yDistance;
+    yPos = getY() - yDistance;
     height = yDistance * 2;
 }
 

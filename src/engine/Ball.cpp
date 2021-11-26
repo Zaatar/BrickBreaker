@@ -12,8 +12,8 @@ void Ball::init()
     }
     lastPositionX = 0.0f;
     lastPositionY = -0.7f;
-    translationMatrix[12] = lastPositionX;
-    translationMatrix[13] = lastPositionY;
+    setX(lastPositionX);
+    setY(lastPositionY);
     updateCoordinates(XDISTANCE, YDISTANCE);
     for (int i = 0; i < 3; ++i)
     {
@@ -55,10 +55,12 @@ void Ball::movement(float dt, Paddle &paddle)
     {
         speedY = -speedY;
     }
-    translationMatrix[12] = speedX * dt + lastPositionX;
-    lastPositionX = translationMatrix[12];
-    translationMatrix[13] = speedY * dt + lastPositionY;
-    lastPositionY = translationMatrix[13];
+    float xValue = speedX * dt + lastPositionX;
+    setX(xValue);
+    lastPositionX = getX();
+    float yValue = speedY * dt + lastPositionY;
+    setY(yValue);
+    lastPositionY = getY();
     updateCoordinates(XDISTANCE, YDISTANCE);
 }
 

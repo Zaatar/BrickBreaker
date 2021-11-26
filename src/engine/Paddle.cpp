@@ -10,9 +10,9 @@ void Paddle::init()
     {
         scaleMatrix[i] = paddleScaleMatrix[i];
     }
-    translationMatrix[13] = YSTARTPOS;
+    setY(YSTARTPOS);
     lastPositionX = XSTARTPOS;
-    lastPositionY = translationMatrix[13];
+    lastPositionY = getY();
     updateCoordinates(XDISTANCE, YDISTANCE);
 }
 
@@ -25,8 +25,9 @@ void Paddle::movement(float dt, bool moveLeft, bool moveRight)
         {
             speedX = 0;
         }
-        translationMatrix[12] = -speedX * dt + lastPositionX;
-        lastPositionX = translationMatrix[12];
+        float xValue = -speedX * dt + lastPositionX;
+        setX(xValue);
+        lastPositionX = getX();
         updateCoordinates(XDISTANCE, YDISTANCE);
         speedX = 1;
     }
@@ -36,8 +37,9 @@ void Paddle::movement(float dt, bool moveLeft, bool moveRight)
         {
             speedX = 0;
         }
-        translationMatrix[12] = speedX * dt + lastPositionX;
-        lastPositionX = translationMatrix[12];
+        float xValue = speedX * dt + lastPositionX;
+        setX(xValue);
+        lastPositionX = getX();
         updateCoordinates(XDISTANCE, YDISTANCE);
         speedX = 1;
     }
