@@ -12,14 +12,19 @@ void Ball::init()
     }
     lastPositionX = 0.0f;
     lastPositionY = -0.7f;
-    translationMatrix[12] = lastPositionX;
-    translationMatrix[13] = lastPositionY;
+    setX(lastPositionX);
+    setY(lastPositionY);
     updateCoordinates(XDISTANCE, YDISTANCE);
+    for (int i = 0; i < 3; ++i)
+    {
+        colors[i] = 1.0f;
+    }
 }
 
-void Ball::movement(float dt, float paddleXPosition)
+void Ball::movement(float dt, Paddle &paddle)
 {
     float threshold = 1.0 - 0.15;
+    float paddleXPosition = paddle.getLastPositionX();
     if (lastPositionY < -threshold)
     {
         //Ball hits to the left of the paddle
@@ -30,6 +35,7 @@ void Ball::movement(float dt, float paddleXPosition)
             lastPositionY = YSTARTPOS;
             speedX = 1.0f;
             speedY = 1.0f;
+            paddle.updateLives();
         }
         if (lastPositionX > paddleXPosition + 0.2)
         {
@@ -38,6 +44,7 @@ void Ball::movement(float dt, float paddleXPosition)
             lastPositionY = YSTARTPOS;
             speedX = 1.0f;
             speedY = 1.0f;
+            paddle.updateLives();
         }
     }
     if (abs(lastPositionX) > 1)
@@ -48,10 +55,12 @@ void Ball::movement(float dt, float paddleXPosition)
     {
         speedY = -speedY;
     }
-    translationMatrix[12] = speedX * dt + lastPositionX;
-    lastPositionX = translationMatrix[12];
-    translationMatrix[13] = speedY * dt + lastPositionY;
-    lastPositionY = translationMatrix[13];
+    float xValue = speedX * dt + lastPositionX;
+    setX(xValue);
+    lastPositionX = getX();
+    float yValue = speedY * dt + lastPositionY;
+    setY(yValue);
+    lastPositionY = getY();
     updateCoordinates(XDISTANCE, YDISTANCE);
 }
 
@@ -95,6 +104,5 @@ void Ball::paddleCollision(Square &paddle)
 
 void Ball::brickCollision(Square &brick)
 {
-    speedX = -speedX;
     speedY = -speedY;
 }

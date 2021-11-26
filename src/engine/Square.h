@@ -21,10 +21,15 @@ public:
 
     inline float getLastPositionX() { return lastPositionX; }
     inline float getLastPositionY() { return lastPositionY; }
+    inline float getX() { return translationMatrix[12]; }
+    inline float setX(float xP) { translationMatrix[12] = xP; }
+    inline float getY() { return translationMatrix[13]; }
+    inline float setY(float yP) { translationMatrix[13] = yP; }
 
 protected:
     GLuint vao;
-    GLuint vbo;
+    GLuint pointsVbo;
+    GLuint colorsVbo;
     Shader shader;
 
     float xPos;   //X at bottom left of drawn object
@@ -49,5 +54,7 @@ protected:
         0.0f, 1.0f, 0.0f, 0.0f,
         0.0f, 0.0f, 1.0f, 0.0f,
         0.0f, 0.0f, 0.0f, 1.0f};
+
+    float colors[3] = {};
 };
 #endif

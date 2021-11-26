@@ -6,7 +6,8 @@ void Brick::init(float xPos, float yPos)
     {
         scaleMatrix[i] = brickScaleMatrix[i];
     }
-    translationMatrix[12] = xPos;
-    translationMatrix[13] = yPos;
+    setX(xPos);
+    setY(yPos);
     updateCoordinates(0.11, 0.06);
+    colors[2] = 1.0f;
 }

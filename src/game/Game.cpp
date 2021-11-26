@@ -6,15 +6,11 @@ using std::endl;
 
 Game::Game() : isRunning(false), windowWidth(0), windowHeight(0) {}
 
-void Game::init(int windowWidthP, int windowHeightP)
+void Game::populateBricks()
 {
-    windowWidth = windowWidthP;
-    windowHeight = windowHeightP;
-    isRunning = true;
-    ball.init();
-    paddle.init();
-    int brickCounter = 0;
-    //bricksVector.reserve(ROWS * COLUMNS);
+    xStartPos = origXStartPos;
+    yStartPos = origYStartPos;
+    bricksVector.reserve(ROWS * COLUMNS);
     for (int i = 0; i < COLUMNS; ++i)
     {
         for (int j = 0; j < ROWS; ++j)
@@ -24,19 +20,49 @@ void Game::init(int windowWidthP, int windowHeightP)
             bricksVector.push_back(brick);
             xStartPos = xStartPos + BRICK_GAP;
         }
-        xStartPos = -0.9f;
+        xStartPos = origXStartPos;
         yStartPos = yStartPos - Y_BRICK_GAP;
     }
+}
+
+void Game::loadBricks()
+{
+    for (int i = 0; i < bricksVector.size(); ++i)
+    {
+        bricksVector[i].load();
+    }
+}
+
+void Game::renderBricks()
+{
+    for (int i = 0; i < bricksVector.size(); ++i)
+    {
+        bricksVector[i].render();
+    }
+}
+
+void Game::restartBricks()
+{
+    populateBricks();
+    loadBricks();
+    renderBricks();
+}
+
+void Game::init(int windowWidthP, int windowHeightP)
+{
+    windowWidth = windowWidthP;
+    windowHeight = windowHeightP;
+    isRunning = true;
+    ball.init();
+    paddle.init();
+    populateBricks();
 }
 
 void Game::load()
 {
     ball.load();
     paddle.load();
-    for (int i = 0; i < bricksVector.size(); ++i)
-    {
-        bricksVector[i].load();
-    }
+    loadBricks();
 }
 
 void Game::handleInputs()
@@ -50,30 +76,47 @@ void Game::handleInputs()
             isRunning = false;
             break;
         case SDL_KEYDOWN:
-            if (event.key.keysym.sym == SDLK_ESCAPE)
+            if (isRunning)
             {
-                isRunning = false;
+                if (event.key.keysym.sym == SDLK_ESCAPE)
+                {
+                    isRunning = false;
+                }
+                if (event.key.keysym.sym == SDLK_RIGHT || event.key.keysym.sym == SDLK_d)
+                {
+                    paddleMoveRight = true;
+                    paddleMoveLeft = false;
+                }
+                if (event.key.keysym.sym == SDLK_LEFT || event.key.keysym.sym == SDLK_a || event.key.keysym.sym == SDLK_q)
+                {
+                    paddleMoveRight = false;
+                    paddleMoveLeft = true;
+                }
             }
-            if (event.key.keysym.sym == SDLK_RIGHT || event.key.keysym.sym == SDLK_d)
+            if (isGameOver)
             {
-                paddleMoveRight = true;
-                paddleMoveLeft = false;
-            }
-            if (event.key.keysym.sym == SDLK_LEFT || event.key.keysym.sym == SDLK_a || event.key.keysym.sym == SDLK_q)
-            {
-                paddleMoveRight = false;
-                paddleMoveLeft = true;
+                if (event.key.keysym.sym == SDLK_SPACE)
+                {
+                    isRunning = true;
+                    isGameOver = false;
+                    paddle.setLives(5);
+                }
             }
             break;
+
         case SDL_KEYUP:
-            if (event.key.keysym.sym == SDLK_RIGHT || event.key.keysym.sym == SDLK_d)
+            if (isRunning)
             {
-                paddleMoveRight = false;
+                if (event.key.keysym.sym == SDLK_RIGHT || event.key.keysym.sym == SDLK_d)
+                {
+                    paddleMoveRight = false;
+                }
+                if (event.key.keysym.sym == SDLK_LEFT || event.key.keysym.sym == SDLK_a || event.key.keysym.sym == SDLK_q)
+                {
+                    paddleMoveLeft = false;
+                }
             }
-            if (event.key.keysym.sym == SDLK_LEFT || event.key.keysym.sym == SDLK_a || event.key.keysym.sym == SDLK_q)
-            {
-                paddleMoveLeft = false;
-            }
+            break;
         default:
             break;
         }
@@ -82,7 +125,12 @@ void Game::handleInputs()
 
 void Game::update(float dt)
 {
-    ball.movement(dt, paddle.getLastPositionX());
+    if (paddle.getLives() <= 0)
+    {
+        isRunning = false;
+        isGameOver = true;
+    }
+    ball.movement(dt, paddle);
     paddle.movement(dt, paddleMoveLeft, paddleMoveRight);
     //To be improved upon, having to call the paddleCollision from paddle is not the best
     //Paddle Collision Code
@@ -99,8 +147,14 @@ void Game::update(float dt)
         {
             ball.brickCollision(bricksVector[i]);
             bricksVector.erase(bricksVector.begin() + i);
+            paddle.updateScore();
         }
         brickCollision = false;
+    }
+    //Brick Restart Code
+    if (bricksVector.empty())
+    {
+        restartBricks();
     }
 }
 
@@ -108,10 +162,7 @@ void Game::render()
 {
     ball.render();
     paddle.render();
-    for (int i = 0; i < bricksVector.size(); ++i)
-    {
-        bricksVector[i].render();
-    }
+    renderBricks();
 }
 
 void Game::clean() {}

@@ -8,6 +8,11 @@ class Paddle : public Square
 public:
     void init();
     void movement(float dt, bool moveLeft, bool moveRight);
+    void updateScore();
+    void updateLives();
+
+    inline int getLives() { return lives; }
+    inline void setLives(int livesP) { lives = livesP; }
     const float XDISTANCE = 0.21f;
     const float YDISTANCE = 0.06f;
     const float XSTARTPOS = 0.0f;
@@ -19,5 +24,8 @@ private:
         0.0f, 0.1f, 0.0f, 0.0f,
         0.0f, 0.0f, 1.0f, 0.0f,
         0.0f, 0.0f, 0.0f, 1.0f};
+
+    int score = 0;
+    int lives = 5;
 };
 #endif
