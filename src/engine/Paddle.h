@@ -10,6 +10,9 @@ public:
     void movement(float dt, bool moveLeft, bool moveRight);
     void updateScore();
     void updateLives();
+
+    inline int getLives() { return lives; }
+    inline void setLives(int livesP) { lives = livesP; }
     const float XDISTANCE = 0.21f;
     const float YDISTANCE = 0.06f;
     const float XSTARTPOS = 0.0f;

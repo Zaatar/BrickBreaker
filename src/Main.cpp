@@ -8,6 +8,36 @@ using std::endl;
 constexpr int SCREEN_WIDTH = 640;
 constexpr int SCREEN_HEIGHT = 480;
 
+void gameplayloop(Game game, float dt, Window &window, Timer timer)
+{
+    game.init(SCREEN_WIDTH, SCREEN_HEIGHT);
+    game.load();
+    while (game.getIsRunning())
+    {
+        dt = static_cast<float>(timer.computeDeltaTime()) / 1000.0f;
+        game.handleInputs();
+        game.update(dt);
+        //Draw
+        window.clearScreen();
+        game.render();
+        window.swapBuffer();
+    }
+
+    if (game.getIsGameOver())
+    {
+        cout << "The game is now over" << endl;
+        cout << "To restart the game press the SPACE button" << endl;
+    }
+
+    while (game.getIsGameOver())
+    {
+        game.handleInputs();
+        window.clearScreen();
+        if (game.getIsRunning())
+            gameplayloop(game, dt, window, timer);
+    }
+}
+
 int main(int argc = 0, char **argv = nullptr)
 {
     //Handle args
@@ -34,22 +64,12 @@ int main(int argc = 0, char **argv = nullptr)
 
     //Initialize Game
     Game game;
-    game.init(SCREEN_WIDTH, SCREEN_HEIGHT);
-    game.load();
     Timer timer;
     float dt;
 
     //Game Loop
-    while (game.getIsRunning())
-    {
-        dt = static_cast<float>(timer.computeDeltaTime()) / 1000.0f;
-        game.handleInputs();
-        game.update(dt);
-        //Draw
-        window.clearScreen();
-        game.render();
-        window.swapBuffer();
-    }
+    gameplayloop(game, dt, window, timer);
+
     window.clean();
     return 0;
 }

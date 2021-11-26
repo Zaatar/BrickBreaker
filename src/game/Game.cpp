@@ -8,6 +8,8 @@ Game::Game() : isRunning(false), windowWidth(0), windowHeight(0) {}
 
 void Game::populateBricks()
 {
+    xStartPos = origXStartPos;
+    yStartPos = origYStartPos;
     bricksVector.reserve(ROWS * COLUMNS);
     for (int i = 0; i < COLUMNS; ++i)
     {
@@ -41,8 +43,6 @@ void Game::renderBricks()
 
 void Game::restartBricks()
 {
-    xStartPos = origXStartPos;
-    yStartPos = origYStartPos;
     populateBricks();
     loadBricks();
     renderBricks();
@@ -76,30 +76,47 @@ void Game::handleInputs()
             isRunning = false;
             break;
         case SDL_KEYDOWN:
-            if (event.key.keysym.sym == SDLK_ESCAPE)
+            if (isRunning)
             {
-                isRunning = false;
+                if (event.key.keysym.sym == SDLK_ESCAPE)
+                {
+                    isRunning = false;
+                }
+                if (event.key.keysym.sym == SDLK_RIGHT || event.key.keysym.sym == SDLK_d)
+                {
+                    paddleMoveRight = true;
+                    paddleMoveLeft = false;
+                }
+                if (event.key.keysym.sym == SDLK_LEFT || event.key.keysym.sym == SDLK_a || event.key.keysym.sym == SDLK_q)
+                {
+                    paddleMoveRight = false;
+                    paddleMoveLeft = true;
+                }
             }
-            if (event.key.keysym.sym == SDLK_RIGHT || event.key.keysym.sym == SDLK_d)
+            if (isGameOver)
             {
-                paddleMoveRight = true;
-                paddleMoveLeft = false;
-            }
-            if (event.key.keysym.sym == SDLK_LEFT || event.key.keysym.sym == SDLK_a || event.key.keysym.sym == SDLK_q)
-            {
-                paddleMoveRight = false;
-                paddleMoveLeft = true;
+                if (event.key.keysym.sym == SDLK_SPACE)
+                {
+                    isRunning = true;
+                    isGameOver = false;
+                    paddle.setLives(5);
+                }
             }
             break;
+
         case SDL_KEYUP:
-            if (event.key.keysym.sym == SDLK_RIGHT || event.key.keysym.sym == SDLK_d)
+            if (isRunning)
             {
-                paddleMoveRight = false;
+                if (event.key.keysym.sym == SDLK_RIGHT || event.key.keysym.sym == SDLK_d)
+                {
+                    paddleMoveRight = false;
+                }
+                if (event.key.keysym.sym == SDLK_LEFT || event.key.keysym.sym == SDLK_a || event.key.keysym.sym == SDLK_q)
+                {
+                    paddleMoveLeft = false;
+                }
             }
-            if (event.key.keysym.sym == SDLK_LEFT || event.key.keysym.sym == SDLK_a || event.key.keysym.sym == SDLK_q)
-            {
-                paddleMoveLeft = false;
-            }
+            break;
         default:
             break;
         }
@@ -108,6 +125,11 @@ void Game::handleInputs()
 
 void Game::update(float dt)
 {
+    if (paddle.getLives() <= 0)
+    {
+        isRunning = false;
+        isGameOver = true;
+    }
     ball.movement(dt, paddle);
     paddle.movement(dt, paddleMoveLeft, paddleMoveRight);
     //To be improved upon, having to call the paddleCollision from paddle is not the best

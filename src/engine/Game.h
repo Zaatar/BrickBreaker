@@ -31,9 +31,11 @@ public:
     void restartBricks();
 
     inline bool getIsRunning() { return isRunning; }
+    inline bool getIsGameOver() { return isGameOver; }
 
 private:
     bool isRunning;
+    bool isGameOver = false;
     int windowWidth, windowHeight;
 
     Ball ball;
