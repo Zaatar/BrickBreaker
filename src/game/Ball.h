@@ -3,7 +3,6 @@
 
 #include <math.h>
 #include "Paddle.h"
-#include "Square.h"
 
 class Ball : public Square
 {

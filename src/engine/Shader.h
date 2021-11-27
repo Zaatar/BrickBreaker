@@ -36,7 +36,7 @@ private:
 
     const char *fragmentShader =
         "#version 430\n"
-        "in vec3 color;"
+        "uniform vec3 color;"
         "out vec4 fragmentColor;"
         "void main() {"
         "   fragmentColor = vec4(color,1.0f);"

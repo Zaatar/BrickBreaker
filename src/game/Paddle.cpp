@@ -1,4 +1,3 @@
-#include <iostream>
 #include "Paddle.h"
 
 using std::cout;
@@ -14,6 +13,10 @@ void Paddle::init()
     lastPositionX = XSTARTPOS;
     lastPositionY = getY();
     updateCoordinates(XDISTANCE, YDISTANCE);
+    for (int i = 0; i < 3; ++i)
+    {
+        colors[i] = 0.5f;
+    }
 }
 
 void Paddle::movement(float dt, bool moveLeft, bool moveRight)

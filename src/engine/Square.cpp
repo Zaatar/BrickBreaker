@@ -44,7 +44,9 @@ void Square::render()
     shader.use();
     int scaleMatrixLocation = glGetUniformLocation(shader.programId, "scaleMatrix");
     int translationMatrixLocation = glGetUniformLocation(shader.programId, "translationMatrix");
+    int colorsLocation = glGetUniformLocation(shader.programId, "color");
     glUniformMatrix4fv(scaleMatrixLocation, 1, GL_FALSE, scaleMatrix);
     glUniformMatrix4fv(translationMatrixLocation, 1, GL_FALSE, translationMatrix);
+    glUniform3f(colorsLocation, colors[0], colors[1], colors[2]);
     glDrawArrays(GL_POLYGON, 0, 4);
 }
