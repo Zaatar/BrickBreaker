@@ -1,7 +1,7 @@
 #ifndef BRICK_H
 #define BRICK_H
 
-#include "Square.h"
+#include "../engine/Square.h"
 
 class Brick : public Square
 {

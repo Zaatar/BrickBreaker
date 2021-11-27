@@ -5,9 +5,9 @@
 #include <vector>
 #include <SDL.h>
 
-#include "Ball.h"
-#include "Paddle.h"
-#include "Brick.h"
+#include "../game/Ball.h"
+#include "../game/Paddle.h"
+#include "../game/Brick.h"
 
 using std::set;
 using std::vector;

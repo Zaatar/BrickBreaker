@@ -1,7 +1,9 @@
 #ifndef PADDLE_H
 #define PADDLE_H
 
-#include "Square.h"
+#include <iostream>
+
+#include "../engine/Square.h"
 
 class Paddle : public Square
 {
